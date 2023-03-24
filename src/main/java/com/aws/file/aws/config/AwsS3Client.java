@@ -20,6 +20,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 
 @Component
 public class AwsS3Client {
@@ -60,7 +61,6 @@ public class AwsS3Client {
 			fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
 			logger.info("File url is {}", fileUrl);
 			uploadFileTos3bucket(fileName, files);
-		//	URL s3Url = s3client.getUrl(bucketName, fileName);
 			logger.info("File uploaded successfully");
 			files.delete();
 			return fileUrl;
@@ -82,6 +82,10 @@ public class AwsS3Client {
 		fos.write(file.getBytes());
 		fos.close();
 		return convFile;
+	}
+
+	public S3Object downloadFile(String fileName) {
+		return s3client.getObject(bucketName, fileName);
 	}
 
 }
